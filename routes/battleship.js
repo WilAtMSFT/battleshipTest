@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET battleship page. */
 router.get('/', function(req, res, next) {
-    let result = 'begin';
+    let result = 'Begin';
     let board = {};
     board.cells = [];
 
@@ -27,7 +27,7 @@ router.get('/', function(req, res, next) {
 
     let boardString = JSON.stringify(board);
     
-    res.render('battleship', { title: 'Battleship!', result: result, boardString: boardString});
+    res.render('battleship', { title: 'Battleship!', result: result, boardString: boardString, cells:board.cells});
 });
 
 /* POST to battleship page. */
@@ -41,18 +41,18 @@ router.post('/', function(req, res) {
     let result = fire(x,y,board);
     let boardString = JSON.stringify(board);
 
-    res.render('battleship', { title: 'Battleship!', xcoordinate: x, ycoordinate: y, result: result, boardString: boardString});
+    res.render('battleship', { title: 'Battleship!', xcoordinate: x, ycoordinate: y, result: result, boardString: boardString, cells:board.cells});
 });
 
 function fire(x,y, board) {
    if (board.gameOver == 1) {
-    return 'error - the game is over!'
+    return 'Error - the game is over!'
   }
 
   if (x > 2 || x < 0 || y > 2 || y < 0) {
     return 'error - coordinate out of range'
   }
-  let result = 'hit';
+  let result = 'Hit';
   let xarry = board.cells[x];
 
   if (xarry == null) {
@@ -64,13 +64,13 @@ function fire(x,y, board) {
 
   if (shipId == null) {
     xarry[y] = 0;
-    return 'miss';
+    return 'Miss';
   }
 
   // check if this spot has been fired on already
   if (shipId < 1)
   {
-    return 'duplicate fire error'
+    return 'Duplicate fire error'
   }
 
   // we have a ship, lets count the hit
@@ -86,10 +86,10 @@ function fire(x,y, board) {
     if (board.shipsRemaining == 0)
     {
       board.gameOver = 1;
-      return 'sunk all ships - congrats!!';
+      return 'Sunk all ships - congrats!!';
     }
 
-    return 'ship sunk';
+    return 'Ship sunk';
   }
 
   return result;

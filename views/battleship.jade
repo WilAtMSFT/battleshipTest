@@ -1,9 +1,8 @@
 extends layout
 
 block content
-    h1= title
-    p Welcome to #{title}
-    p Your last fire was to #{xcoordinate}, #{ycoordinate} and was a #{result}
+    h1 Welcome to #{title}
+    h2= result
 
     form#fire(name="fire",method="post",action="/battleship")
         | X: 
@@ -17,8 +16,17 @@ block content
 
     #container
         table#board
-            - for ( i = 0; i < 3; i++ )
+            - for ( y = 0; y < 3; y++ )
                 tr
                     - for( x= 0 ;x < 3 ; x++ )
-                        - var index = (i * 3) + x;
-                        td
+                        - const cell = cells[x][y]
+                        - let color = 'blue';
+                        - if (cell != null) {
+                        -   if (cell == 0) {
+                        -     color = 'white'
+                        -   } else if (cell < 0) {
+                        -     color = 'red'
+                        -   }
+                        - }
+                        - let tag = 'blue'
+                        td(style="background-color:#{color}")
