@@ -38,12 +38,61 @@ router.post('/', function(req, res) {
     let y = req.body.ycoordinate;
     let board = JSON.parse(req.body.boardString);
 
-    //let result = fire(x,y,board);
+    let result = fire(x,y,board);
     let boardString = JSON.stringify(board);
-
-    let result = 'Miss';
 
     res.render('battleship', { title: 'Battleship!', xcoordinate: x, ycoordinate: y, result: result, boardString: boardString});
 });
+
+function fire(x,y, board) {
+   if (board.gameOver == 1) {
+    return 'error - the game is over!'
+  }
+
+  if (x > 2 || x < 0 || y > 2 || y < 0) {
+    return 'error - coordinate out of range'
+  }
+  let result = 'hit';
+  let xarry = board.cells[x];
+
+  if (xarry == null) {
+    xarry = [];
+    board.cells[x] = xarry;
+  }
+
+  let shipId = xarry[y];
+
+  if (shipId == null) {
+    xarry[y] = 0;
+    return 'miss';
+  }
+
+  // check if this spot has been fired on already
+  if (shipId < 1)
+  {
+    return 'duplicate fire error'
+  }
+
+  // we have a ship, lets count the hit
+  board.ships[shipId]--;
+  xarry[y] = -1 * xarry[y];
+
+  if (board.ships[shipId] == 0)
+  {
+    // ship sunk
+    board.shipsRemaining--;
+
+    // is the game over
+    if (board.shipsRemaining == 0)
+    {
+      board.gameOver = 1;
+      return 'sunk all ships - congrats!!';
+    }
+
+    return 'ship sunk';
+  }
+
+  return result;
+}
 
 module.exports = router;
