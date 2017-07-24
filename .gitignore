@@ -1,0 +1,2 @@
+# exclude the node_modules directories as it is large and has issues with git
+node_modules 
