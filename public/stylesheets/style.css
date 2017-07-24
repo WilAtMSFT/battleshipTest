@@ -6,3 +6,25 @@ body {
 a {
   color: #00B7FF;
 }
+
+table {
+  margin: 0 auto;
+  margin-top: 5em;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  border: 6px solid #222;
+  border-spacing:0;
+  width: 25px;
+  height: 25px;
+}
+
+
+#container {
+  max-width: 600px;
+    margin: 0 auto;
+}

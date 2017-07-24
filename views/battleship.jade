@@ -14,3 +14,11 @@ block content
         br
         input#BoardData(type="hidden", value=boardString, name="boardString", readonly)
         button#btnSubmit(type="submit") submit
+
+    #container
+        table#board
+            - for ( i = 0; i < 3; i++ )
+                tr
+                    - for( x= 0 ;x < 3 ; x++ )
+                        - var index = (i * 3) + x;
+                        td
