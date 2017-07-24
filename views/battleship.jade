@@ -1,5 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    h1= title
+    p Welcome to #{title}
+    p Your last fire was to #{xcoordinate}, #{ycoordinate} and was a #{result}
+
+    form#fire(name="fire",method="post",action="/battleship")
+        | X: 
+        input#inputXCoordinate(type="text", placeholder="0", name="xcoordinate") 
+        br
+        | Y: 
+        input#inputYCoordinate(type="text", placeholder="0", name="ycoordinate") 
+        br
+        button#btnSubmit(type="submit") submit
